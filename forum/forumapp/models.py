@@ -35,7 +35,7 @@ class Post(models.Model):
 	post_title = models.CharField(max_length=64)
 	post_time = models.DateTimeField(auto_now=True)
 	User = models.ForeignKey(User, on_delete=models.CASCADE)
-	post_text = models.CharField()
+	post_text = models.CharField(max_length=1024)
 
 	def __str__(self):
 		return self.post_title
@@ -45,7 +45,7 @@ class Reply(models.Model):
 	Post = models.ForeignKey(Post, on_delete=models.CASCADE)
 	reply_time = models.DateTimeField(auto_now=True)
 	User = models.ForeignKey(User, on_delete=models.CASCADE)
-	reply_text = models.CharField()
+	reply_text = models.CharField(max_length=1024)
 
 	def __str__(self):
 		return 'Reply to ' + self.Post.post_title + ' from ' + self.User.user_username
