@@ -306,3 +306,4 @@ pip-selfcheck.json
 .history
 
 # End of https://www.gitignore.io/api/node,react,django,python,visualstudiocode
+.vscode/settings.json
