@@ -25,7 +25,7 @@ python3 -m venv venv
 the virtual environment can then be activated by running the following on UNIX based systems
 
 ```shell
-./venv/bin/activate
+source ./venv/bin/activate
 ```
 
 or the following on Windows systems:
