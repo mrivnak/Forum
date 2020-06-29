@@ -7,7 +7,7 @@ class User(models.Model):
 	user_name = models.CharField(max_length=32)
 	user_email = models.EmailField()
 	user_password = models.CharField(max_length=128)  # large max length to accomodate hashes
-	user_avatar = models.ImageField()
+	user_avatar = models.ImageField(blank=True)
 	user_signature = models.CharField(max_length=512)
 	user_is_admin = models.BooleanField(default=False)
 
@@ -40,12 +40,12 @@ class Post(models.Model):
 	def __str__(self):
 		return self.post_title
 
-class Reply(models.Model):
-	ReplyID = models.AutoField(primary_key=True)
+class Comment(models.Model):
+	CommentID = models.AutoField(primary_key=True)
 	Post = models.ForeignKey(Post, on_delete=models.CASCADE)
-	reply_time = models.DateTimeField(auto_now=True)
+	comment_time = models.DateTimeField(auto_now=True)
 	User = models.ForeignKey(User, on_delete=models.CASCADE)
-	reply_text = models.CharField(max_length=1024)
+	comment_text = models.CharField(max_length=1024)
 
 	def __str__(self):
-		return 'Reply to ' + self.Post.post_title + ' from ' + self.User.user_username
+		return 'Comment on ' + self.Post.post_title + ' from ' + self.User.user_username
