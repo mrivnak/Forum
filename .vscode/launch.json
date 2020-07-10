@@ -5,13 +5,33 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Python: Django",
+			"name": "Django: runserver",
 			"type": "python",
 			"request": "launch",
 			"program": "${workspaceFolder}\\forum\\manage.py",
 			"args": [
 				"runserver",
 				"--noreload"
+			],
+			"django": true
+		},
+		{
+			"name": "Django: make migrations",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}\\forum\\manage.py",
+			"args": [
+				"makemigrations"
+			],
+			"django": true
+		},
+		{
+			"name": "Django: migrate",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}\\forum\\manage.py",
+			"args": [
+				"migrate"
 			],
 			"django": true
 		}
