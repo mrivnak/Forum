@@ -306,4 +306,3 @@ pip-selfcheck.json
 .history
 
 # End of https://www.gitignore.io/api/node,react,django,python,visualstudiocode
-forum/reactapp/static/reactapp/main.js
