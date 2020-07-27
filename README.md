@@ -6,8 +6,6 @@
 
 This project requires the following be installed:
   * Python 3
-  * Node.js
-  * Yarn
 
 ### Python Virtual Environment
 
@@ -48,21 +46,9 @@ For the python virtual environment dependencies can be installed using
 pip install -r requirements.txt
 ```
 
-For Node.js dependencies can be installed using
-
-```shell
-yarn
-```
-
 ### Usage
 
 #### Manually
-
-```shell
-yarn dev
-```
-
-then
 
 ```shell
 python ./forum/manage.py runserver
