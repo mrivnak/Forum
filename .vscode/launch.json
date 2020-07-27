@@ -8,6 +8,7 @@
 			"name": "Django: runserver",
 			"type": "python",
 			"request": "launch",
+			"preLaunchTask": "npm: dev",
 			"program": "${workspaceFolder}\\forum\\manage.py",
 			"args": [
 				"runserver",
