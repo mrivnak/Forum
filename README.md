@@ -65,7 +65,7 @@ yarn dev
 then
 
 ```shell
-python3 ./forum/manage.py runserver
+python ./forum/manage.py runserver
 ```
 
 #### With Visual Studio Code
