@@ -5,7 +5,10 @@
 ### Requirments
 
 This project requires the following be installed:
-  * Python 3
+
+* Python 3
+* Node.js
+* Yarn
 
 ### Python Virtual Environment
 
@@ -14,6 +17,7 @@ For this it is advisable to use a virtual environment for python 3. This can be 
 ```shell
 python -m venv venv
 ```
+
 or if python 2 is installed:
 
 ```shell
@@ -44,6 +48,12 @@ For the python virtual environment dependencies can be installed using
 
 ```shell
 pip install -r requirements.txt
+```
+
+For Node.js dependencies can be installed using
+
+```shell
+yarn
 ```
 
 ### Usage
