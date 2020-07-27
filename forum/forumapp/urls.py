@@ -1,11 +1,11 @@
-from rest_framework import routers
-from .api import UserViewSet, CategoryViewSet, BoardViewSet, PostViewSet, CommentViewSet
+from django.urls import path, re_path
 
-router = routers.DefaultRouter()
-router.register('api/user', UserViewSet, 'forumapp')
-router.register('api/category', CategoryViewSet, 'forumapp')
-router.register('api/board', BoardViewSet, 'forumapp')
-router.register('api/post', PostViewSet, 'forumapp')
-router.register('api/comment', CommentViewSet, 'forumapp')
+from . import views
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('login', views.login, name='login'),
+    re_path(r'category/(?P<id>\d+)', views.category, name='category'),
+    re_path(r'post/(?P<id>\d+)', views.post, name='post'),
+    re_path(r'user/(?P<id>\d+)', views.user, name='user'),
+]
