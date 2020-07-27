@@ -30,8 +30,14 @@ source ./venv/bin/activate
 
 or the following on Windows systems:
 
-```shell
-.\venv\bin\Activate.ps1
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+if PowerShell complains about not being able to run scripts, run the following in an Administrator PowerShell
+
+```powershell
+Set-ExecutionPolicy RemoteSigned
 ```
 
 ### Installing Dependencies
@@ -47,3 +53,21 @@ For Node.js dependencies can be installed using
 ```shell
 yarn
 ```
+
+### Usage
+
+#### Manually
+
+```shell
+yarn dev
+```
+
+then
+
+```shell
+python ./forum/manage.py runserver
+```
+
+#### With Visual Studio Code
+
+For simplicity, I have provided launch scripts for Visual Studio Code. Running "Django: runserver" will run all the required tasks to compile the JavaScript
