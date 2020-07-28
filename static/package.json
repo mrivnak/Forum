@@ -1,7 +1,15 @@
 {
+  "name": "forum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "dependencies": {
-    "@popperjs/core": "^2.4.4",
     "bootstrap": "^4.5.0",
+    "popper.js": "^1.16.1",
     "jquery": "^3.5.1"
-  }
+  },
+  "devDependencies": {
+  },
+  "author": "",
+  "license": " GPL-3.0-or-later"
 }

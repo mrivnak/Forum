@@ -13,17 +13,17 @@ def login(request):
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
-def category(request):
+def category(request, id):
     template = loader.get_template('category.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
-def post(request):
+def post(request, id):
     template = loader.get_template('post.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
-def user(request):
+def user(request, id):
     template = loader.get_template('user.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
