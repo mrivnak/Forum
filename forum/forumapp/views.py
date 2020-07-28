@@ -2,10 +2,25 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template import loader
 
+from .models import *
+
 # Create your views here.
 def index(request):
     template = loader.get_template('index.html')
-    context = {}  # TODO: add contexts
+
+    boards = Board.objects.order_by()
+    board_list = []
+
+    for board in boards:
+        categories = board.category_set.all()
+
+        board_list.append({
+            'board': board,
+            'categories': categories
+        })
+    context = {
+        'boards': board_list
+    }  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
 def login(request):
