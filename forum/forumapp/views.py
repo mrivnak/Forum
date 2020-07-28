@@ -27,3 +27,34 @@ def user(request, id):
     template = loader.get_template('user.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
+
+def form_add(request, type):
+    template = loader.get_template('user.html')
+    context = {}  # TODO: add contexts
+    return HttpResponse(template.render(context, request))
+
+def form_edit(request, type, id):
+    template = loader.get_template('user.html')
+    context = {}  # TODO: add contexts
+    return HttpResponse(template.render(context, request))
+
+def delete(request, type, id):
+    instance = None
+    if type == 'post':
+        instance = Post.objects.get(pk=id)
+        instance.delete()
+    elif type == 'user':
+        instance = User.objects.get(pk=id)
+        instance.delete()
+    elif type == 'comment':
+        instance = Comment.objects.get(pk=id)
+        instance.delete()
+    else:
+        return HttpResponseNotFound("Invalid form option(s)")
+
+    return HttpResponseRedirect('/')
+
+def error404(request):
+    template = loader.get_template('404.html')
+    context = {}  # TODO: add contexts
+    return HttpResponse(template.render(context, request))
