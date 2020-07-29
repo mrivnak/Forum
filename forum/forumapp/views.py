@@ -33,6 +33,18 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+def board(request):
+    if request.method == 'POST':
+        form = BoardForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.save()
+            return redirect('index')
+    else:
+        form = BoardForm()
+    return render(request, 'board.html', { 'form' : form })
+
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)

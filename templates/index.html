@@ -4,7 +4,7 @@
 
 {% block navbar %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand" href="/"><span style="color: rgb(190, 6, 6)">WIT</span>Boards</a>
+    <a class=" navbar-brand" href="/"><span style="color: rgb(190, 6, 6)">WIT</span>Boards</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -49,6 +49,7 @@
 {% block content %}
 <!-- TODO: Page layout -->
 <h3>Home</h3>
+{% if boards %}
 {% for board in boards %}
 <div class=" container-fluid pl-0 pr-0 pt-2 pb-2">
     <ul class="list-group">
@@ -60,4 +61,18 @@
     </ul>
 </div>
 {% endfor %}
+<a href="/board" class="card-link btn btn-primary">Create Board</a>
+{% else %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card text-center" style="width: 24rem;">
+            <div class="card-body ml-auto mr-auto">
+                <h5 class="card-title">You don't have any boards yet...</h5>
+                <p class="card-text">Make a new home for your university class or favorite subject!</p>
+                <a href="/board" class="card-link btn btn-primary">Create Board</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

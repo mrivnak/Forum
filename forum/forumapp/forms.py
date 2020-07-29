@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User
+from .models import User, Board
  
 class SignUpForm(UserCreationForm):
     username = forms.CharField(
@@ -85,3 +85,14 @@ class LoginForm(AuthenticationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'password')
+
+class BoardForm(forms.ModelForm):
+    class Meta:
+        model = Board
+        fields = ['board_title']
+        widgets = { 
+            'board_title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Title',
+                }),
+        }   

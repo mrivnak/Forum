@@ -9,6 +9,7 @@ urlpatterns = [
     path('users/', include('django.contrib.auth.urls')), #default logout url/view --> redirect to home
     path('login/', auth_views.LoginView.as_view(authentication_form=forms.LoginForm), name='login'),
     path('signup/', views.signup, name='signup'),
+    path('board/', views.board, name='new_board'),
     re_path(r'^category/(?P<id>\d+)', views.category, name='category'),
     re_path(r'^post/(?P<id>\d+)', views.post, name='post'),
     re_path(r'^user/(?P<id>\d+)', views.user, name='user'),
