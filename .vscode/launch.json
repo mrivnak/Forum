@@ -8,7 +8,7 @@
 			"name": "Django: runserver",
 			"type": "python",
 			"request": "launch",
-			"program": "${workspaceFolder}\\forum\\manage.py",
+			"program": "${workspaceFolder}/forum/manage.py",
 			"args": [
 				"runserver",
 				"--noreload"
@@ -19,7 +19,7 @@
 			"name": "Django: make migrations",
 			"type": "python",
 			"request": "launch",
-			"program": "${workspaceFolder}\\forum\\manage.py",
+			"program": "${workspaceFolder}/forum/manage.py",
 			"args": [
 				"makemigrations"
 			],
@@ -29,7 +29,7 @@
 			"name": "Django: migrate",
 			"type": "python",
 			"request": "launch",
-			"program": "${workspaceFolder}\\forum\\manage.py",
+			"program": "${workspaceFolder}/forum/manage.py",
 			"args": [
 				"migrate"
 			],

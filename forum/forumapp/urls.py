@@ -1,11 +1,20 @@
-from rest_framework import routers
-from .api import UserViewSet, CategoryViewSet, BoardViewSet, PostViewSet, CommentViewSet
+from django.urls import path, re_path, include
+from django.views.generic.base import TemplateView
+from django.contrib.auth import views as auth_views
 
-router = routers.DefaultRouter()
-router.register('api/user', UserViewSet, 'forumapp')
-router.register('api/category', CategoryViewSet, 'forumapp')
-router.register('api/board', BoardViewSet, 'forumapp')
-router.register('api/post', PostViewSet, 'forumapp')
-router.register('api/comment', CommentViewSet, 'forumapp')
+from . import views, forms
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('users/', include('django.contrib.auth.urls')), #default logout url/view --> redirect to home
+    path('login/', auth_views.LoginView.as_view(authentication_form=forms.LoginForm), name='login'),
+    path('signup/', views.signup, name='signup'),
+    path('board/', views.board, name='new_board'),
+    re_path(r'^category/(?P<id>\d+)', views.category, name='category'),
+    re_path(r'^post/(?P<id>\d+)', views.post, name='post'),
+    re_path(r'^user/(?P<id>\d+)', views.user, name='user'),
+    path('user/', views.error404, name='404'),
+    re_path(r'^forms/(?P<type>\w+)/add/(?P<id>\d+)', views.form_add, name='form_add'),
+    re_path(r'^forms/(?P<type>\w+)/edit/(?P<id>\d+)', views.form_edit, name='form_edit'),
+    re_path(r'^forms/(?P<type>\w+)/delete/(?P<id>\d+)', views.delete, name='delete'),
+]

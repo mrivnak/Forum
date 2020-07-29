@@ -1,19 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class User(models.Model):
-	UserID = models.AutoField(primary_key=True)
-	user_username = models.CharField(max_length=24)
-	user_name = models.CharField(max_length=32)
+class User(AbstractUser):
 	user_department = models.CharField(max_length=64, blank=True)
-	user_email = models.EmailField()
-	user_password = models.CharField(max_length=128)  # large max length to accomodate hashes
 	user_avatar = models.ImageField(blank=True)
-	user_signature = models.CharField(max_length=512, blank=True)
-	user_is_admin = models.BooleanField(default=False)
 
 	def __str__(self):
-		return self.user_username
+		return self.get_username()
 
 class Board(models.Model):
 	BoardID = models.AutoField(primary_key=True)
@@ -49,4 +43,4 @@ class Comment(models.Model):
 	comment_text = models.CharField(max_length=1024)
 
 	def __str__(self):
-		return 'Comment on ' + self.Post.post_title + ' from ' + self.User.user_username
+		return 'Comment on ' + self.Post.post_title + ' from ' + self.User.username
