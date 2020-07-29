@@ -50,15 +50,20 @@
 <!-- TODO: Page layout -->
 <h3>Home</h3>
 {% if boards %}
+{% if user.is_superuser %}
 <a href="/board" class="card-link btn btn-primary">Create Board</a>
+{% endif %}
 {% for board in boards %}
 <div class=" container-fluid pl-0 pr-0 pt-2 pb-2">
     <ul class="list-group">
         <li class="list-group-item"><b>{{ board.board.board_title }}</b></li>
         {% for category in board.categories %}
         <a class="list-group-item list-group-item-action"
-            href="/category/{{ category.id }}">{{ category.category.category_title }}</a>
+            href="/category/{{ category.id }}">{{ category.category.category_title }} <span
+                class="badge badge-pill badge-primary">
+                {{ category.category.post_set.count }}</span></a>
         {% endfor %}
+        <a class="list-group-item list-group-item-action" href="#">+Add Another Category</a>
     </ul>
 </div>
 {% endfor %}
