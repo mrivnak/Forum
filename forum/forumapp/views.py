@@ -33,11 +33,6 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-def login(request):
-    template = loader.get_template('login.html')
-    context = {}  # TODO: add contexts
-    return HttpResponse(template.render(context, request))
-
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -47,7 +42,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             authlogin(request, user)
-            return redirect('home')
+            return redirect('index')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', { 'form' : form })
