@@ -14,13 +14,20 @@ def index(request):
     for board in boards:
         categories = board.category_set.all()
 
+        category_list = []
+
+        for category in categories:
+            category_list.append({
+                'category': category,
+                'id': category.pk
+            })
+
         board_list.append({
             'board': board,
-            'categories': categories
+            'categories': category_list
         })
     context = {
         'boards': board_list
-    }  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
 def login(request):
@@ -30,7 +37,14 @@ def login(request):
 
 def category(request, id):
     template = loader.get_template('category.html')
-    context = {}  # TODO: add contexts
+
+    category = Category.objects.get(pk=id)
+
+    posts = category.post_set.all()
+
+    context = {
+        'category': category,
+        'posts': posts
     return HttpResponse(template.render(context, request))
 
 def post(request, id):
