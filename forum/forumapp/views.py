@@ -59,13 +59,13 @@ def user(request, id):
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
-def form_add(request, type):
-    template = loader.get_template('user.html')
+def form_add(request, type, id):  # id can be the category pk when creating a post, or the post id when creating a comment
+    template = loader.get_template('form.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
 def form_edit(request, type, id):
-    template = loader.get_template('user.html')
+    template = loader.get_template('form.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
