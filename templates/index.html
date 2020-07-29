@@ -50,6 +50,7 @@
 <!-- TODO: Page layout -->
 <h3>Home</h3>
 {% if boards %}
+<a href="/board" class="card-link btn btn-primary">Create Board</a>
 {% for board in boards %}
 <div class=" container-fluid pl-0 pr-0 pt-2 pb-2">
     <ul class="list-group">
@@ -61,7 +62,6 @@
     </ul>
 </div>
 {% endfor %}
-<a href="/board" class="card-link btn btn-primary">Create Board</a>
 {% else %}
 <div class="container">
     <div class="row justify-content-center">
