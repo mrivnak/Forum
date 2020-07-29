@@ -1,10 +1,14 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
+from django.views.generic.base import TemplateView
+from django.contrib.auth import views as auth_views
 
-from . import views
+from . import views, forms
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login', views.login, name='login'),
+    path('users/', include('django.contrib.auth.urls')), #default logout url/view --> redirect to home
+    path('login/', auth_views.LoginView.as_view(authentication_form=forms.LoginForm), name='login'),
+    path('signup/', views.signup, name='signup'),
     re_path(r'^category/(?P<id>\d+)', views.category, name='category'),
     re_path(r'^post/(?P<id>\d+)', views.post, name='post'),
     re_path(r'^user/(?P<id>\d+)', views.user, name='user'),
