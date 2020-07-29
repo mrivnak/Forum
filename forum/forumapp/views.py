@@ -28,6 +28,7 @@ def index(request):
         })
     context = {
         'boards': board_list
+    }
     return HttpResponse(template.render(context, request))
 
 def login(request):
@@ -45,6 +46,7 @@ def category(request, id):
     context = {
         'category': category,
         'posts': posts
+    }
     return HttpResponse(template.render(context, request))
 
 def post(request, id):
