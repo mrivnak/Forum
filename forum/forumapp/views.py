@@ -1,7 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.template import loader
+from django.contrib.auth import login as authlogin, authenticate
 
+from .forms import *
 from .models import *
 
 # Create your views here.
@@ -35,6 +37,20 @@ def login(request):
     template = loader.get_template('login.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            authlogin(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', { 'form' : form })
 
 def category(request, id):
     template = loader.get_template('category.html')

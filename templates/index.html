@@ -5,25 +5,39 @@
 {% block navbar %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <a class="navbar-brand" href="/"><span style="color: rgb(190, 6, 6)">WIT</span>Boards</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     Zoom
                 </a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="/user/">User</a>
             </li>
+            <li class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link" style="color: rgb(190, 6, 6)">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="{% url 'login' %}" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'signup' %}" class="nav-link">Sign up</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -33,13 +47,14 @@
 <!-- TODO: Page layout -->
 <h3>Home</h3>
 {% for board in boards %}
-    <div class="container-fluid pl-0 pr-0 pt-2 pb-2">
-        <ul class="list-group">
-            <li class="list-group-item"><b>{{ board.board.board_title }}</b></li>
-            {% for category in board.categories %}
-                <a class="list-group-item list-group-item-action" href="/category/{{ category.id }}">{{ category.category.category_title }}</a>
-            {% endfor %}
-        </ul>
-    </div>
+<div class=" container-fluid pl-0 pr-0 pt-2 pb-2">
+    <ul class="list-group">
+        <li class="list-group-item"><b>{{ board.board.board_title }}</b></li>
+        {% for category in board.categories %}
+        <a class="list-group-item list-group-item-action"
+            href="/category/{{ category.id }}">{{ category.category.category_title }}</a>
+        {% endfor %}
+    </ul>
+</div>
 {% endfor %}
 {% endblock %}
