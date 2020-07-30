@@ -135,12 +135,35 @@ def form_add_id(request, type, id):  # id can be the category pk when creating a
                 category.Board = Board.objects.get(pk=id)
                 category.save()
                 return redirect('/')
+        elif type == 'post':
+            form = PostForm(request.POST)
+
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.Category = Category.objects.get(pk=id)
+                post.User = request.user
+                post.save()
+                post_id = post.PostID
+                return redirect(f'/post/{post_id}')
+        elif type == 'comment':
+            form = CommentForm(request.POST)
+
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.Post = Post.objects.get(pk=id)
+                comment.User = request.user
+                comment.save()
+                return redirect(f'/post/{id}')
         else:
             return HttpResponseNotFound("Invalid form option(s)")
 
     elif request.method == 'GET':
         if type == 'category':
             form = CategoryForm()
+        elif type == 'post':
+            form = PostForm()
+        elif type == 'comment':
+            form = CommentForm()
         else:
             return HttpResponseNotFound("Invalid form option(s)")
 

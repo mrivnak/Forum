@@ -107,3 +107,27 @@ class CategoryForm(forms.ModelForm):
                 'placeholder': 'Title',
                 }),
         }
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['post_title', 'post_text']
+        widgets = { 
+            'post_title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Title',
+                }),
+            'post_text': forms.Textarea(attrs={
+                'class': 'form-control',
+                }),
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment_text']
+        widgets = { 
+            'comment_text': forms.Textarea(attrs={
+                'class': 'form-control',
+                }),
+        }
