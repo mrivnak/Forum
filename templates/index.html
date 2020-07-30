@@ -66,7 +66,7 @@
 </div>
 {% endif %}
 {% for board in boards %}
-<div class=" container-fluid pl-0 pr-0 pt-2 pb-2">
+<div id="{{ board.board.pk }}" class="container-fluid pl-0 pr-0 pt-2 pb-2">
     <ul class="list-group">
         <li class="list-group-item"><b>{{ board.board.board_title }}</b></li>
         {% for category in board.categories %}

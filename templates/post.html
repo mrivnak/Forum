@@ -59,6 +59,18 @@
 {% block content %}
 <!-- TODO: Page layout -->
 
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/#{{ category.Board.pk }}">{{ post.Category.Board.board_title }}</a></li>
+    <li class="breadcrumb-item"><a href="/category/{{ post.Category.pk }}">{{ post.Category.category_title }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ post.post_title }}</li>
+  </ol>
+</nav>
+
+
+<h3 class="card-title">{{ post.post_title }}</h3>
+
 {% load markdown_extras %}
 
 <div class="card mb-4">
@@ -75,7 +87,6 @@
         </div>
         <div class="col">
             <div class="card-body">
-                <h5 class="card-title">{{ post.post_title }}</h5>
 
                 <p class="card-text">{{ post.post_text | markdown | safe }}</p>
 

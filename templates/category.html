@@ -3,7 +3,16 @@
 {% block title %}WITBoards - {{ category.category_title }}{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/#{{ category.Board.pk }}">{{ category.Board.board_title }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ category.category_title }}</li>
+  </ol>
+</nav>
+
 <h3>{{ category.category_title }}</h3>
+
 <div class="pt-2 pb-3">
     <a class="btn btn-primary" href="/forms/post/add/{{ category.pk }}" role="button">Create New Post</a>
 </div>
