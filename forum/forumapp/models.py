@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
 	user_department = models.CharField(max_length=64, blank=True)
 	user_avatar = models.ImageField(blank=True)
+	user_signature = models.TextField()
 
 	def __str__(self):
 		return self.get_username()
@@ -30,7 +31,7 @@ class Post(models.Model):
 	post_title = models.CharField(max_length=64)
 	post_time = models.DateTimeField(auto_now=True)
 	User = models.ForeignKey(User, on_delete=models.CASCADE)
-	post_text = models.CharField(max_length=1024)
+	post_text = models.TextField()
 
 	def __str__(self):
 		return self.post_title
@@ -40,7 +41,7 @@ class Comment(models.Model):
 	Post = models.ForeignKey(Post, on_delete=models.CASCADE)
 	comment_time = models.DateTimeField(auto_now=True)
 	User = models.ForeignKey(User, on_delete=models.CASCADE)
-	comment_text = models.CharField(max_length=1024)
+	comment_text = models.TextField()
 
 	def __str__(self):
 		return 'Comment on ' + self.Post.post_title + ' from ' + self.User.username
