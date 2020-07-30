@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template import loader
 from django.contrib.auth import login as authlogin, authenticate
@@ -123,9 +123,40 @@ def form_add(request, type):  # id can be the category pk when creating a post, 
         return HttpResponseNotFound("Invalid form option(s)")
 
 def form_add_id(request, type, id):  # id can be the category pk when creating a post, or the post id when creating a comment
-    template = loader.get_template('form.html')
-    context = {}  # TODO: add contexts
-    return HttpResponse(template.render(context, request))
+    form = None
+    print(type)
+
+    if request.method == 'POST':
+        if type == 'category':
+            form = CategoryForm(request.POST)
+
+            if form.is_valid():
+                category = form.save(commit=False)
+                category.Board = Board.objects.get(pk=id)
+                category.save()
+                return redirect('/')
+        else:
+            return HttpResponseNotFound("Invalid form option(s)")
+
+    elif request.method == 'GET':
+        if type == 'category':
+            form = CategoryForm()
+        else:
+            return HttpResponseNotFound("Invalid form option(s)")
+
+        template = loader.get_template('form.html')
+
+        context = {
+            'request': request,
+            'type': type,
+            'title': type.title(),
+            'form': form,
+        }  # TODO: add contexts
+
+        return HttpResponse(template.render(context, request))
+
+    else:
+        return HttpResponseNotFound("Invalid form option(s)")
 
 def form_edit(request, type, id):
     template = loader.get_template('form.html')

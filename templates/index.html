@@ -75,7 +75,7 @@
         </a>
         {% endfor %}
         {% if user.is_superuser %}
-        <a class="list-group-item list-group-item-action" href="#"><small class="text-muted">+Add Another Category</small></a>
+        <a class="list-group-item list-group-item-action" href="/forms/category/add/{{ board.board.pk }}"><small class="text-muted">+Add Another Category</small></a>
         {% endif %}
     </ul>
 </div>
