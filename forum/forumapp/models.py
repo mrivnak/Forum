@@ -45,3 +45,12 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return 'Comment on ' + self.Post.post_title + ' from ' + self.User.username
+
+class Zoom(models.Model):
+	ZoomID = models.AutoField(primary_key=True)
+	zoom_title = models.CharField(max_length=64)
+	zoom_url = models.URLField()
+	User = models.ForeignKey(User, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.User.username + ' - ' +self.zoom_title

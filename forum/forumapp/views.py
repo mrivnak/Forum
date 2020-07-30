@@ -28,8 +28,12 @@ def index(request):
             'board': board,
             'categories': category_list
         })
+    
+    zoom_list = Zoom.objects.order_by()
+
     context = {
-        'boards': board_list
+        'boards': board_list,
+        'zoom_list': zoom_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -63,18 +67,33 @@ def category(request, id):
     template = loader.get_template('category.html')
 
     category = Category.objects.get(pk=id)
-
     posts = category.post_set.all()
+
+    zoom_list = Zoom.objects.order_by()
 
     context = {
         'category': category,
-        'posts': posts
+        'posts': posts,
+        'zoom_list': zoom_list,
     }
     return HttpResponse(template.render(context, request))
 
 def post(request, id):
     template = loader.get_template('post.html')
-    context = {}  # TODO: add contexts
+
+    post = Post.objects.get(pk=id)
+
+    zoom_list = Zoom.objects.order_by()
+
+    comments = post.comment_set.all()
+
+    context = {
+        'post': post,
+        'zoom_list': zoom_list,
+        'comments': comments,
+    }  # TODO: add contexts
+
+
     return HttpResponse(template.render(context, request))
 
 def user(request, id):
@@ -82,7 +101,12 @@ def user(request, id):
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
 
-def form_add(request, type, id):  # id can be the category pk when creating a post, or the post id when creating a comment
+def form_add(request, type):  # id can be the category pk when creating a post, or the post id when creating a comment
+    template = loader.get_template('form.html')
+    context = {}  # TODO: add contexts
+    return HttpResponse(template.render(context, request))
+
+def form_add_id(request, type, id):  # id can be the category pk when creating a post, or the post id when creating a comment
     template = loader.get_template('form.html')
     context = {}  # TODO: add contexts
     return HttpResponse(template.render(context, request))
