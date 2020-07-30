@@ -12,15 +12,23 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Zoom
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for zoom in zoom_list %}
+                        {% if zoom.User == user %}
+                            <a class="dropdown-item" href="{{ zoom.zoom_url }}">{{ zoom.zoom_title }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/forms/zoom/add">Add Zoom link</a>
+                </div>
             </li>
             {% endif %}
         </ul>
@@ -50,4 +58,71 @@
 
 {% block content %}
 <!-- TODO: Page layout -->
+
+{% load markdown_extras %}
+
+<div class="card mb-4">
+    <div class="row no-gutters">
+        <div class="col-2 border-right">
+            <div class="m-3 text-center">
+                <img src="https://picsum.photos/200" class="card-img" alt="">
+                <p class="pt-1 text-muted">
+                    {{ post.User.first_name }} {{ post.User.last_name }}<br/>
+                    <small class="text-muted">{{ post.User.username }}</small><br/>
+                    <small class="text-muted">{{ post.User.user_department }}</small>
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.post_title }}</h5>
+
+                <p class="card-text">{{ post.post_text | markdown | safe }}</p>
+
+                {% load tz %}
+                {% timezone "America/New_York" %}
+                <p class="card-text align-self-end"><small class="text-muted">{{ post.post_time }}</small></p>
+                {% endtimezone %}
+            </div>
+            {% if post.User.user_signature %}
+                <div class="card-body border-top align-self-end">
+                    <p class="card-text text-muted text-center">{{ post.User.user_signature | markdown | safe }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% for comment in comments %}
+<div class="card mb-4">
+    <div class="row no-gutters">
+        <div class="col-2 border-right">
+            <div class="m-3 text-center">
+                <img src="https://picsum.photos/200" class="card-img" alt="">
+                <p class="pt-1 text-muted">
+                    {{ comment.User.first_name }} {{ comment.User.last_name }}<br/>
+                    <small class="text-muted">{{ comment.User.username }}</small><br/>
+                    <small class="text-muted">{{ comment.User.user_department }}</small>
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <p class="card-text">{{ comment.comment_text | markdown | safe }}</p>
+
+                {% load tz %}
+                {% timezone "America/New_York" %}
+                <p class="card-text align-self-end"><small class="text-muted">{{ comment.comment_time }}</small></p>
+                {% endtimezone%}
+            </div>
+            {% if comment.User.user_signature %}
+                <div class="card-body border-top align-self-end">
+                    <p class="card-text text-muted text-center">{{ comment.User.user_signature | markdown | safe }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
 {% endblock %}
