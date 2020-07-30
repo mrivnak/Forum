@@ -110,5 +110,5 @@ def delete(request, type, id):
 
 def error404(request):
     template = loader.get_template('404.html')
-    context = {}  # TODO: add contexts
+    context = {}
     return HttpResponse(template.render(context, request))
