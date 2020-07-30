@@ -37,18 +37,6 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-def board(request):
-    if request.method == 'POST':
-        form = BoardForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.save()
-            return redirect('index')
-    else:
-        form = BoardForm()
-    return render(request, 'board.html', { 'form' : form })
-
-
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -102,9 +90,37 @@ def user(request, id):
     return HttpResponse(template.render(context, request))
 
 def form_add(request, type):  # id can be the category pk when creating a post, or the post id when creating a comment
-    template = loader.get_template('form.html')
-    context = {}  # TODO: add contexts
-    return HttpResponse(template.render(context, request))
+    form = None
+
+    if request.method == 'POST':
+        if type == 'board':
+            form = BoardForm(request.POST)
+        else:
+            return HttpResponseNotFound("Invalid form option(s)")
+
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    elif request.method == 'GET':
+        if type == 'board':
+            form = BoardForm()
+        else:
+            return HttpResponseNotFound("Invalid form option(s)")
+
+        template = loader.get_template('form.html')
+
+        context = {
+            'request': request,
+            'type': type,
+            'title': type.title(),
+            'form': form,
+        }  # TODO: add contexts
+
+        return HttpResponse(template.render(context, request))
+
+    else:
+        return HttpResponseNotFound("Invalid form option(s)")
 
 def form_add_id(request, type, id):  # id can be the category pk when creating a post, or the post id when creating a comment
     template = loader.get_template('form.html')
@@ -118,7 +134,13 @@ def form_edit(request, type, id):
 
 def delete(request, type, id):
     instance = None
-    if type == 'post':
+    if type == 'board':
+        instance = Board.objects.get(pk=id)
+        instance.delete()
+    elif type == 'category':
+        instance = Category.objects.get(pk=id)
+        instance.delete()
+    elif type == 'post':
         instance = Post.objects.get(pk=id)
         instance.delete()
     elif type == 'user':
@@ -130,9 +152,11 @@ def delete(request, type, id):
     else:
         return HttpResponseNotFound("Invalid form option(s)")
 
-    return HttpResponseRedirect('/')
+    return redirect('/')
 
-def error404(request):
+def page_not_found(request, exception):
     template = loader.get_template('404.html')
-    context = {}
+    context = {
+        'exception': exception
+    }
     return HttpResponse(template.render(context, request))
