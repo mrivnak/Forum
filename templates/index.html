@@ -17,14 +17,15 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     Zoom
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for zoom in zoom_list %}
-                        {% if zoom.User == user %}
-                            <a class="dropdown-item" href="{{ zoom.zoom_url }}">{{ zoom.zoom_title }}</a>
-                        {% endif %}
+                    {% if zoom.User == user %}
+                    <a class="dropdown-item" href="{{ zoom.zoom_url }}">{{ zoom.zoom_title }}</a>
+                    {% endif %}
                     {% endfor %}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/forms/zoom/add">Add Zoom link</a>
@@ -38,7 +39,7 @@
                 <span class="nav-link disabled text-primary">Hi {{ user.first_name }}!</span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/">Profile</a>
+                <a class="nav-link" href="/user/{{ user.id }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
@@ -71,11 +72,14 @@
         <li class="list-group-item"><b>{{ board.board.board_title }}</b></li>
         {% for category in board.categories %}
         <a class="list-group-item list-group-item-action" href="/category/{{ category.id }}">
-            {{ category.category.category_title }} <span class="badge badge-primary">{{ category.category.post_set.count }} {% if category.category.post_set.count == 1 %}post{% else %}posts{% endif %}</span>
+            {{ category.category.category_title }} <span
+                class="badge badge-primary">{{ category.category.post_set.count }}
+                {% if category.category.post_set.count == 1 %}post{% else %}posts{% endif %}</span>
         </a>
         {% endfor %}
         {% if user.is_superuser %}
-        <a class="list-group-item list-group-item-action" href="/forms/category/add/{{ board.board.pk }}"><small class="text-muted">+Add Another Category</small></a>
+        <a class="list-group-item list-group-item-action" href="/forms/category/add/{{ board.board.pk }}"><small
+                class="text-muted">+Add Another Category</small></a>
         {% endif %}
     </ul>
 </div>
