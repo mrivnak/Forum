@@ -123,6 +123,9 @@ class PostForm(forms.ModelForm):
         }
 
 class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['comment_text'].label = 'Add a reply...'
     class Meta:
         model = Comment
         fields = ['comment_text']

@@ -75,10 +75,13 @@ def post(request, id):
 
     comments = post.comment_set.all()
 
+    form = CommentForm()
+
     context = {
         'post': post,
         'zoom_list': zoom_list,
         'comments': comments,
+        'form': form,
     }  # TODO: add contexts
 
 
@@ -124,7 +127,6 @@ def form_add(request, type):  # id can be the category pk when creating a post, 
 
 def form_add_id(request, type, id):  # id can be the category pk when creating a post, or the post id when creating a comment
     form = None
-    print(type)
 
     if request.method == 'POST':
         if type == 'category':
