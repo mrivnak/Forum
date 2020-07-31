@@ -25,6 +25,13 @@ class Category(models.Model):
 	def __str__(self):
 		return self.category_title
 
+	def numNewPosts(self):
+		newposts = []
+		for post in self.post_set:
+			newposts.append(post)
+		newposts = [post for post in newposts if post.post_time > datetime.now() - 1]
+		return len(newposts)
+
 class Post(models.Model):
 	PostID = models.AutoField(primary_key=True)
 	Category = models.ForeignKey(Category, on_delete=models.CASCADE)

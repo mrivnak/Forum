@@ -59,42 +59,53 @@
 
 {% block content %}
 <!-- TODO: Page layout -->
-<h3>Home</h3>
-{% if boards %}
-{% if user.is_superuser %}
-<div class="pt-2 pb-2">
-    <a href="/forms/board/add" class="card-link btn btn-primary">Create New Board</a>
-</div>
-{% endif %}
-{% for board in boards %}
-<div id="{{ board.board.pk }}" class="container-fluid pl-0 pr-0 pt-2 pb-2">
-    <ul class="list-group">
-        <li class="list-group-item"><b>{{ board.board.board_title }}</b></li>
-        {% for category in board.categories %}
-        <a class="list-group-item list-group-item-action" href="/category/{{ category.id }}">
-            {{ category.category.category_title }} <span
-                class="badge badge-primary">{{ category.category.post_set.count }}
-                {% if category.category.post_set.count == 1 %}post{% else %}posts{% endif %}</span>
-        </a>
-        {% endfor %}
-        {% if user.is_superuser %}
-        <a class="list-group-item list-group-item-action" href="/forms/category/add/{{ board.board.pk }}"><small
-                class="text-muted">+Add Another Category</small></a>
+<div class="container-fluid justify-content-center">
+    <h3>Home</h3>
+    {% if boards %}
+    {% if user.is_superuser %}
+    <div class="pt-2 pb-2">
+        <a href="/forms/board/add" class="card-link btn btn-primary">Create New Board</a>
+    </div>
+    {% endif %}
+    <div class="row row-cols-4 h-50 justify-content-around">
+        {% for board in boards %}
+        <div id="{{ board.board.pk }}" class="col rounded border border-light pl-0 pr-0 mt-5 shadow">
+            <ul class="list-group">
+                <li class="list-group-item text-center"><b style="font-size: large;">{{ board.board.board_title }}</b>
+                </li>
+                {% for category in board.categories %}
+                <a class="list-group-item list-group-item-action" href="/category/{{ category.id }}">
+                    {{ category.category.category_title }}
+                    {% if category.category.post_set.count > 0 %}
+                    <span class="badge badge-primary">{{ category.category.post_set.count }}
+                        {% if category.category.post_set.count == 1 %}post{% else %}posts{% endif %}
+                    </span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+                {% if user.is_superuser %}
+                <a class="list-group-item list-group-item-action" href="/forms/category/add/{{ board.board.pk }}"><small
+                        class="text-muted">+Add Another Category</small></a>
+                {% endif %}
+            </ul>
+        </div>
+        {% if forloop.counter|divisibleby:"3" %}
+    </div>
+    <div class="row row-cols-4 justify-content-around">
         {% endif %}
-    </ul>
-</div>
-{% endfor %}
-{% else %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="card text-center" style="width: 24rem;">
-            <div class="card-body ml-auto mr-auto">
-                <h5 class="card-title">You don't have any boards yet...</h5>
-                <p class="card-text">Make a new home for your university class or favorite subject!</p>
-                <a href="/board" class="card-link btn btn-primary">Create Board</a>
+        {% endfor %}
+        {% else %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card text-center" style="width: 24rem;">
+                    <div class="card-body ml-auto mr-auto">
+                        <h5 class="card-title">You don't have any boards yet...</h5>
+                        <p class="card-text">Make a new home for your university class or favorite subject!</p>
+                        <a href="/board" class="card-link btn btn-primary">Create Board</a>
+                    </div>
+                </div>
             </div>
         </div>
+        {% endif %}
     </div>
-</div>
-{% endif %}
-{% endblock %}
+    {% endblock %}
