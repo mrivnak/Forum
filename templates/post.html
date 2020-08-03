@@ -17,14 +17,15 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     Zoom
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for zoom in zoom_list %}
-                        {% if zoom.User == user %}
-                            <a class="dropdown-item" href="{{ zoom.zoom_url }}">{{ zoom.zoom_title }}</a>
-                        {% endif %}
+                    {% if zoom.User == user %}
+                    <a class="dropdown-item" href="{{ zoom.zoom_url }}">{{ zoom.zoom_title }}</a>
+                    {% endif %}
                     {% endfor %}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/forms/zoom/add">Add Zoom link</a>
@@ -38,7 +39,7 @@
                 <span class="nav-link disabled text-primary">Hi {{ user.first_name }}!</span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/">Profile</a>
+                <a class="nav-link" href="/user/{{ user.id }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
@@ -59,6 +60,19 @@
 {% block content %}
 <!-- TODO: Page layout -->
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/#{{ category.Board.pk }}">{{ post.Category.Board.board_title }}</a></li>
+        <li class="breadcrumb-item"><a href="/category/{{ post.Category.pk }}">{{ post.Category.category_title }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ post.post_title }}</li>
+    </ol>
+</nav>
+
+
+<h3 class="card-title">{{ post.post_title }}</h3>
+
 {% load markdown_extras %}
 
 <div class="card mb-4">
@@ -67,15 +81,14 @@
             <div class="m-3 text-center">
                 <img src="https://picsum.photos/200" class="card-img" alt="">
                 <p class="pt-1 text-muted">
-                    {{ post.User.first_name }} {{ post.User.last_name }}<br/>
-                    <small class="text-muted">{{ post.User.username }}</small><br/>
+                    {{ post.User.first_name }} {{ post.User.last_name }}<br />
+                    <small class="text-muted">{{ post.User.username }}</small><br />
                     <small class="text-muted">{{ post.User.user_department }}</small>
                 </p>
             </div>
         </div>
         <div class="col">
             <div class="card-body">
-                <h5 class="card-title">{{ post.post_title }}</h5>
 
                 <p class="card-text">{{ post.post_text | markdown | safe }}</p>
 
@@ -85,9 +98,9 @@
                 {% endtimezone %}
             </div>
             {% if post.User.user_signature %}
-                <div class="card-body border-top align-self-end">
-                    <p class="card-text text-muted text-center">{{ post.User.user_signature | markdown | safe }}</p>
-                </div>
+            <div class="card-body border-top align-self-end">
+                <p class="card-text text-muted text-center">{{ post.User.user_signature | markdown | safe }}</p>
+            </div>
             {% endif %}
         </div>
     </div>
@@ -98,10 +111,10 @@
     <div class="row no-gutters">
         <div class="col-2 border-right">
             <div class="m-3 text-center">
-                <img src="https://picsum.photos/200" class="card-img" alt="">
+                <img src="https://picsum.photos/200/" class="card-img" alt="">
                 <p class="pt-1 text-muted">
-                    {{ comment.User.first_name }} {{ comment.User.last_name }}<br/>
-                    <small class="text-muted">{{ comment.User.username }}</small><br/>
+                    {{ comment.User.first_name }} {{ comment.User.last_name }}<br />
+                    <small class="text-muted">{{ comment.User.username }}</small><br />
                     <small class="text-muted">{{ comment.User.user_department }}</small>
                 </p>
             </div>
@@ -116,13 +129,23 @@
                 {% endtimezone%}
             </div>
             {% if comment.User.user_signature %}
-                <div class="card-body border-top align-self-end">
-                    <p class="card-text text-muted text-center">{{ comment.User.user_signature | markdown | safe }}</p>
-                </div>
+            <div class="card-body border-top align-self-end">
+                <p class="card-text text-muted text-center">{{ comment.User.user_signature | markdown | safe }}</p>
+            </div>
             {% endif %}
         </div>
     </div>
 </div>
 {% endfor %}
 
+<form action="/forms/comment/add/{{ post.pk }}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if user.is_authenticated %}
+        <button class="btn btn-primary" type="submit">Reply</button>
+    {% else %}
+        <button class="btn btn-primary disabled">Reply</button>
+        <p>You must sign in to reply.</p>
+    {% endif %}
+</form>
 {% endblock %}
