@@ -10,6 +10,7 @@
     <!-- Bootstrap 4 -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
@@ -44,6 +45,17 @@
                         </div>
                     </li>
                     {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            FAQs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a target="_blank" class="dropdown-item"
+                                href="https://cheatography.com/lucbpz/cheat-sheets/the-ultimate-markdown/">Markdown
+                                Help</a>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
