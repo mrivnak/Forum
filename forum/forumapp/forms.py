@@ -63,7 +63,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'first_name', 'last_name', 'user_department', 'email', 'password1', 'password2', )
+        fields = ('username', 'first_name', 'last_name')
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(

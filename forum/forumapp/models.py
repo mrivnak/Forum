@@ -5,7 +5,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
 	user_department = models.CharField(max_length=64, blank=True)
 	user_avatar = models.ImageField(blank=True)
-	user_signature = models.TextField()
+	user_signature = models.TextField(blank=True)
+	user_is_professor = models.BooleanField(default=False)
+	user_is_student = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.get_username()
