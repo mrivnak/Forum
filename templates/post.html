@@ -32,6 +32,16 @@
                 </div>
             </li>
             {% endif %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    FAQs
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a target="_blank" class="dropdown-item"
+                        href="https://cheatography.com/lucbpz/cheat-sheets/the-ultimate-markdown/">Markdown Help</a>
+                </div>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
@@ -142,10 +152,37 @@
     {% csrf_token %}
     {{ form.as_p }}
     {% if user.is_authenticated %}
-        <button class="btn btn-primary" type="submit">Reply</button>
+    <button class="btn btn-primary" type="submit">Reply</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+        <span class="material-icons">
+            help_outline
+        </span>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Markdown Cheat Sheet</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://laurelscode.files.wordpress.com/2017/06/markdown.png?w=470&h=382" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {% else %}
-        <button class="btn btn-primary disabled">Reply</button>
-        <p>You must sign in to reply.</p>
+    <button class="btn btn-primary disabled">Reply</button>
+    <p>You must sign in to reply.</p>
     {% endif %}
 </form>
 {% endblock %}

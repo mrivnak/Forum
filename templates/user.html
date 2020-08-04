@@ -16,11 +16,33 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Zoom
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for zoom in zoom_list %}
+                    {% if zoom.User == user %}
+                    <a class="dropdown-item" href="{{ zoom.zoom_url }}">{{ zoom.zoom_title }}</a>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/forms/zoom/add">Add Zoom link</a>
+                </div>
+            </li>
+            {% endif %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    FAQs
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a target="_blank" class="dropdown-item"
+                        href="https://cheatography.com/lucbpz/cheat-sheets/the-ultimate-markdown/">Markdown
+                        Help</a>
+                </div>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
